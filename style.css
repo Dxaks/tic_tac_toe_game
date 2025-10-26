@@ -1,5 +1,5 @@
 body {
-   height: 100vh;
+   /* height: 100vh; */
    display: flex;
    flex-direction: column;
    justify-content: center;
@@ -10,7 +10,6 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-columns: repeat(3, 1fr);
-    /* gap: 5px; */
 }
 
 .cellDiv {
