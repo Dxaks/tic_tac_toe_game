@@ -23,12 +23,11 @@ const gameBoard = (() => {
         if (targetCell.getCellValue() === 0) {targetCell.addCellValue(player);
         } 
     }   
-    // console log to test the print board
     const printBoard = () => {
         const viewBoard = board.map(row => row.map(cell => cell.getCellValue()));
         return viewBoard;
     }
-
+    // function to reset the gameboard to its original state
     const resetBoard = () => board.map(rows => rows.map(cols => cols.addCellValue(0)))
  
 return {
@@ -57,7 +56,7 @@ function cell() {
 // function to control the game flow
 function gameController(playerOneName = 'Player one',
 playerTwoName = 'player two') {
-
+// player 1 and player 2 object
     const player = [
         {name: prompt('enter name'), token: 1, score: 0}, 
         {name: playerTwoName, token: 2, score: 0}
@@ -75,12 +74,12 @@ playerTwoName = 'player two') {
         } else {
             activePlayer = player[0]
         }
-        console.log(getActivePlayer())
     }
-
+// helper function to expose the player 1 & 2 for that to be used in as player score
     const getPlayer1 = () => player[0];
     const getPlayer2 = () => player[1];
-
+    
+// function to check a winner
     function isWin(player1, player2) {
         const board = gameBoard.printBoard();
         console.log(board);
@@ -180,14 +179,22 @@ function screenController() {
         scoreDiv2.textContent = `Player two: ${player2.score}`;
         // check gameover
          if (checkWin) {
+            cellDiv.innerHTML = '';
             console.log(win.textContent = `${activePlayer.name} won!`)
                 const ok = document.createElement('button')
-                      ok.classList.add('.ok')
-                win.appendChild(ok)
-                ok.textContent = 'OK';
-                ok.addEventListener('click', gameBoard.resetBoard)
-            
-            console.log('heyyyyyyy')
+                    ok.classList.add('ok')
+                    win.appendChild(ok)
+                    ok.textContent = 'OK';
+                    ok.addEventListener('click', (e) => {
+
+                    if (e.target.textContent === 'OK') {
+                        win.style.display = 'none';
+                        gameBoard.resetBoard();
+                        player1.score = 0;
+                        player2.score = 0;
+                        updateScreen();
+                    }      
+                })
             return;
         }
 
