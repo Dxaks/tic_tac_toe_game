@@ -55,10 +55,11 @@ function cell() {
 
 // function to control the game flow
 function gameController(playerOneName = 'Player one',
-playerTwoName = 'player two') {
+playerTwoName = 'Player two') {
 // player 1 and player 2 object
+    playerOneName = prompt('enter player name');
     const player = [
-        {name: prompt('enter name'), token: 1, score: 0}, 
+        {name: playerOneName, token: 1, score: 0}, 
         {name: playerTwoName, token: 2, score: 0}
     ];
 
@@ -78,12 +79,11 @@ playerTwoName = 'player two') {
 // helper function to expose the player 1 & 2 for that to be used in as player score
     const getPlayer1 = () => player[0];
     const getPlayer2 = () => player[1];
-    
+
 // function to check a winner
     function isWin(player1, player2) {
         const board = gameBoard.printBoard();
-        console.log(board);
-
+    
         // helper function for win check
         const getScore = (token) => {
             if (token === player1.token) {
@@ -159,14 +159,17 @@ function screenController() {
 
     const game = gameController();
     const board = gameBoard.getBoard();
+
 // html el. for player turn, player score and buttons container, etc.
     const playerTurn = document.querySelector('.playerTurnDiv');
     const cellDiv = document.querySelector('.cellDiv');
     const scoreDiv1 = document.querySelector('.player1')
     const scoreDiv2 = document.querySelector('.player2')
     const win = document.querySelector('.win');
+
 // update screen function
     const updateScreen = () => {
+       
 // new inner el. content for each cellDiv update
         cellDiv.innerHTML = '';
         const activePlayer = game.getActivePlayer();
@@ -175,12 +178,12 @@ function screenController() {
         const checkWin = game.check3InARow(activePlayer.score);
 
         playerTurn.textContent = `${activePlayer.name} turn`;
-        scoreDiv1.textContent = `Player one: ${player1.score}`;
+        scoreDiv1.textContent = `${player1.name}: ${player1.score}`;
         scoreDiv2.textContent = `Player two: ${player2.score}`;
         // check gameover
          if (checkWin) {
             cellDiv.innerHTML = '';
-            console.log(win.textContent = `${activePlayer.name} won!`)
+                win.textContent = `${activePlayer.name} won!`;
                 const ok = document.createElement('button')
                     ok.classList.add('ok')
                     win.appendChild(ok)
@@ -225,7 +228,7 @@ function screenController() {
 
         let selectedRow = e.target.dataset.row;
         let selectedColumn = e.target.dataset.column;
-        console.log(selectedRow, selectedColumn)
+        
         // turn off for accidential click 
         if ((!selectedRow || !selectedColumn)) return;
         // stop if player drops a token in an occupied place
