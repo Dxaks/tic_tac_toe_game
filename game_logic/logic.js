@@ -212,9 +212,9 @@ function screenController(p1, p2) {
                 if (col.getCellValue() === 0) {
                     cellBtn.textContent = '';
                 } else if (col.getCellValue() === 1){
-                    cellBtn.textContent = 'X';
+                    cellBtn.textContent = '✖️';
                 } else {
-                    cellBtn.textContent = 'O';
+                    cellBtn.textContent = '⭕';
                 }
             })
         })

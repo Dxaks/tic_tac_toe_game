@@ -23,16 +23,22 @@ svg {
 .cellDiv {
     position: relative;
     display: grid;
+    gap: 5px;
     grid-template-columns: repeat(3, 1fr);
     grid-template-columns: repeat(3, 1fr);
 }
 
 .cellDiv {
     border: none;
-    background-color: aliceblue;
+    background-color: rgb(187, 206, 223);
     width: 500px;
     height: 500px;
-    font-size: x-large;
+}
+
+.cellDiv button{
+    font-size: 50px;
+    cursor: pointer;
+    border: none;
 }
 
 .score {
