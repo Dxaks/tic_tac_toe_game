@@ -57,7 +57,6 @@ function cell() {
 function gameController(playerOneName = 'Player one',
 playerTwoName = 'Player two') {
 // player 1 and player 2 object
-    playerOneName = prompt('enter player name');
     const player = [
         {name: playerOneName, token: 1, score: 0}, 
         {name: playerTwoName, token: 2, score: 0}
@@ -122,7 +121,6 @@ playerTwoName = 'Player two') {
     // check 3 in a row win 
     const check3InARow = (currentPoint) => {
         if (currentPoint === 3) {
-            console.log(`${getActivePlayer().name} wins the game!`);
             return true;
         } else {
             return false
@@ -155,9 +153,9 @@ playerTwoName = 'Player two') {
 
 }
 // screen controller for UI
-function screenController() {
+function screenController(p1, p2) {
 
-    const game = gameController();
+    const game = gameController(p1, p2);
     const board = gameBoard.getBoard();
 
 // html el. for player turn, player score and buttons container, etc.
@@ -177,13 +175,13 @@ function screenController() {
         const player2 = game.getPlayer2();
         const checkWin = game.check3InARow(activePlayer.score);
 
-        playerTurn.textContent = `${activePlayer.name} turn`;
+        playerTurn.textContent = `${activePlayer.name} TURN`;
         scoreDiv1.textContent = `${player1.name}: ${player1.score}`;
-        scoreDiv2.textContent = `Player two: ${player2.score}`;
+        scoreDiv2.textContent = `${player2.name}: ${player2.score}`;
         // check gameover
          if (checkWin) {
             cellDiv.innerHTML = '';
-                win.textContent = `${activePlayer.name} won!`;
+                win.textContent = `${activePlayer.name} win the game!`;
                 const ok = document.createElement('button')
                     ok.classList.add('ok')
                     win.appendChild(ok)
@@ -240,4 +238,32 @@ function screenController() {
     cellDiv.addEventListener('click', clickHandler);
     updateScreen();
 }
-screenController();
+
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    const dialog = document.querySelector('dialog')
+    const btns = document.querySelectorAll('button')
+    const user1 = document.getElementById('player_one')
+    const user2 = document.getElementById('player_two')
+
+    dialog.showModal()
+
+    btns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+
+             let pl1 = user1.value;
+            let pl2 = user2.value;
+
+            if (e.target.textContent === 'Submit') {
+                console.log('yeee I pressed submit')
+                screenController(pl1, pl2)
+                dialog.close();
+            } else {
+                screenController('PLAYER ONE', 'PLAYER TWO')
+                dialog.close();
+            }     
+        })
+    })
+})
